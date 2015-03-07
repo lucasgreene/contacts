@@ -1,0 +1,12 @@
+<xmlpage> ::= <addressBook> (pagestuff) 
+(pagestuff) ::= <group name=(text)> (groupstuff) (pagestuff)
+               | </addressBook> EOF
+(groupstuff) ::= <group name=(text)> (groupstuff) (groupstuff)
+               | <contact> (contactStuff) </contact> (groupstuff)
+               | </group>
+(contactStuff) ::= <name> (text) </name> <number> (text) </number> <ownid> (text) </ownid> <friends> (friendStuff)
+                  
+(friendStuff) ::= <id> (text) </id> (friendstuff)
+                | </friends> 
+(text) ::= str
+
