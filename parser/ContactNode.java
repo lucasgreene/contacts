@@ -19,4 +19,8 @@ public class ContactNode implements Contactstuff{
 				friends.toString();
 	}
 	
+	public void add() {
+		
+	}
+	
 }
