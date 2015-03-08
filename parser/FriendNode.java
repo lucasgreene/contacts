@@ -8,4 +8,9 @@ public class FriendNode implements Friendstuff{
 		this.id = id;
 		this.nextFriend = nextFriend;
 	}
+	
+	@Override
+	public String toString() {
+		return "FriendID: " + id + nextFriend.toString();
+	}
 }

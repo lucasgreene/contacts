@@ -8,5 +8,9 @@ public class ContactExp implements Groupstuff{
 		this.info = info;
 		this.otherStuff = otherStuff;
 	}
-
+	
+	@Override
+	public String toString() {
+		return info.toString()  + "\n" + otherStuff.toString();
+	}
 }

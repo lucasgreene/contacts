@@ -18,6 +18,7 @@ public class Parser {
 
 	public AddressbookNode parseXMLPage() throws TokenException {
 		if (current.kind == 5) {
+			System.out.println(current.toString());
 			advance();
 			AddressbookNode book = new AddressbookNode(parsePagestuff());
 			return book;
@@ -29,9 +30,11 @@ public class Parser {
 
 	public Pagestuff parsePagestuff() throws TokenException {
 		Pagestuff toReturn;
+		System.out.println(current.toString());
+		Token name = current;
 		if (current.kind == 23) {
 			advance();
-			toReturn = new OuterGroup(current.attribute, parseGroupstuff(),
+			toReturn = new OuterGroup(name.attribute, parseGroupstuff(),
 					parsePagestuff());
 		} else if (current.kind == 6) {
 			advance();
@@ -44,9 +47,11 @@ public class Parser {
 
 	public Groupstuff parseGroupstuff() throws TokenException {
 		Groupstuff toReturn;
-		if (current.kind == 5) {
+		System.out.println(current.toString());
+		Token name = current;
+		if (current.kind == 23) {
 			advance();
-			toReturn = new InnerGroup(current.attribute, parseGroupstuff(),
+			toReturn = new InnerGroup(name.attribute, parseGroupstuff(),
 					parseGroupstuff());
 		} else if (current.kind == 8) {
 			advance();
@@ -55,12 +60,14 @@ public class Parser {
 			advance();
 			toReturn = new EOGroup();
 		} else {
+			System.out.println("this");
 			throw new TokenException();
 		}
 		return toReturn;
 	}
 
 	public Contactstuff parseContactstuff() throws TokenException {
+		System.out.println(current.toString());
 		Contactstuff toReturn;
 		int openName = current.kind;
 		advance();
@@ -98,6 +105,7 @@ public class Parser {
 	}
 
 	public Friendstuff parseFriendstuff() throws TokenException {
+		System.out.println(current.toString());
 		Friendstuff toReturn;
 		if (current.kind == 18) {
 			advance();

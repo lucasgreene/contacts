@@ -13,4 +13,10 @@ public class ContactNode implements Contactstuff{
 		this.friends = friends;
 	}
 	
+	@Override
+	public String toString() {
+		return name + ", " + number + ", " + ownID + '\n' +
+				friends.toString();
+	}
+	
 }
