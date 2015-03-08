@@ -16,8 +16,9 @@ public class Group {
 		this.contacts = new LinkedList<Person>();
 	}
 	public void addPerson(Person person){
-		for(int i; group)
-		contacts.
+		contacts.addLast(person);
+		for(Group i = parentGroup; i != null ; i = i.parentGroup)
+		i.contacts.addLast(person);
 	}
 
 }

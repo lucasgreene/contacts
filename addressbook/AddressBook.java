@@ -16,9 +16,6 @@ public class AddressBook {
 		nameContacts.put(person.name, person);
 		IDContacts.put(person.ownID, person);
 	}
-	public void initGAdd(Group group){
-		groups.put(group.name, group);
-	}
 	public void personAdd(Person person, Group group){
 		nameContacts.put(person.name, person);
 		IDContacts.put(person.ownID, person);
@@ -27,5 +24,9 @@ public class AddressBook {
 			friend.addFriend(id);
 		}
 		group.addPerson(person);
+	}
+	public void groupAdd(String name, Group parentGroup){
+		Group newGroup = new Group(name, parentGroup);
+		groups.put(name, newGroup);
 	}
 }
