@@ -25,5 +25,16 @@ public class Group {
 		for(Group i = parentGroup; i != null ; i = i.parentGroup)
 		i.contacts.remove(person);
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder string = new StringBuilder();
+
+		for (Person person : contacts){
+			string.append(person.name + "\n");
+		}
+
+		return string.toString();
+	}
 
 }
