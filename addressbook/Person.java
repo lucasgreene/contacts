@@ -17,4 +17,7 @@ public class Person {
 	public void addFriend(int id){
 		friends.addLast(id);
 	}
+	public void removeFriend(int id){
+		friends.remove(id);
+	}
 }

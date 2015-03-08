@@ -20,5 +20,10 @@ public class Group {
 		for(Group i = parentGroup; i != null ; i = i.parentGroup)
 		i.contacts.addLast(person);
 	}
+	public void removePerson(Person person){
+		contacts.remove(person);
+		for(Group i = parentGroup; i != null ; i = i.parentGroup)
+		i.contacts.remove(person);
+	}
 
 }
