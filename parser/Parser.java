@@ -8,15 +8,15 @@ public class Parser {
 	public Parser(XMLTokenizer t) {
 		this.t = t;
 		t.advance();
+		current = t.current();
 	}
-	
+
 	private void advance() {
 		t.advance();
 		current = t.current();
 	}
 
 	public AddressbookNode parseXMLPage() throws TokenException {
-		current = t.current();
 		if (current.kind == 5) {
 			advance();
 			AddressbookNode book = new AddressbookNode(parsePagestuff());
@@ -30,23 +30,98 @@ public class Parser {
 	public Pagestuff parsePagestuff() throws TokenException {
 		Pagestuff toReturn;
 		if (current.kind == 23) {
-			toReturn = new OuterGroup(current.attribute, parseGroupstuff(), parsePagestuff());
 			advance();
+			toReturn = new OuterGroup(current.attribute, parseGroupstuff(),
+					parsePagestuff());
 		} else if (current.kind == 6) {
-			toReturn =  new EOAddressbook();
 			advance();
+			toReturn = new EOAddressbook();
 		} else {
 			throw new TokenException();
 		}
 		return toReturn;
 	}
-	
-	public Groupstuff parseGroupstuff() {
+
+	public Groupstuff parseGroupstuff() throws TokenException {
 		Groupstuff toReturn;
 		if (current.kind == 5) {
-			toReturn = new InnerGroup(current.attribute, parseGroupstuff(), parseGroupstuff());
+			advance();
+			toReturn = new InnerGroup(current.attribute, parseGroupstuff(),
+					parseGroupstuff());
 		} else if (current.kind == 8) {
-			toReturn = new 
+			advance();
+			toReturn = new ContactExp(parseContactstuff(), parseGroupstuff());
+		} else if (current.kind == 7) {
+			advance();
+			toReturn = new EOGroup();
+		} else {
+			throw new TokenException();
 		}
+		return toReturn;
+	}
+
+	public Contactstuff parseContactstuff() throws TokenException {
+		Contactstuff toReturn;
+		int openName = current.kind;
+		advance();
+		int nameText = current.kind;
+		Token name = current;
+		advance();
+		int closeName = current.kind;
+		advance();
+		int openNum = current.kind;
+		advance();
+		int numText = current.kind;
+		Token num = current;
+		advance();
+		int closeNum = current.kind;
+		advance();
+		int openID = current.kind;
+		advance();
+		int idText = current.kind;
+		Token id = current;
+		advance();
+		int closeID = current.kind;
+		advance();
+		int openFriends = current.kind;
+		advance();
+		if (openName == 10 && nameText == 24 && closeName == 11
+				&& openNum == 12 && numText == 24 && closeNum == 13
+				&& openID == 14 && idText == 24 && closeID == 15
+				&& openFriends == 16) {
+			toReturn = new ContactNode(name.attribute, num.attribute,
+					id.attribute, parseFriendstuff());
+		} else {
+			throw new TokenException();
+		}
+		return toReturn;
+	}
+
+	public Friendstuff parseFriendstuff() throws TokenException {
+		Friendstuff toReturn;
+		if (current.kind == 18) {
+			advance();
+			Token text = current;
+			advance();
+			Token endID = current;
+			advance();
+			if (text.kind == 24 && endID.kind == 19) {
+				toReturn = new FriendNode(text.attribute, parseFriendstuff());
+			} else {
+				throw new TokenException();
+			}
+		} else if (current.kind == 17) {
+			advance();
+			if (current.kind == 9) {
+				advance();
+				toReturn = new EOFriends();
+			} else {
+				throw new TokenException();
+			}
+		} else {
+			throw new TokenException();
+		}
+		return toReturn;
+
 	}
 }
