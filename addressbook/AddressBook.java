@@ -27,9 +27,12 @@ public class AddressBook {
 			friend.addFriend(person.ownID);
 		}
 	}
-	public void groupAdd(String name, Group parentGroup){
+	public void newGroupAdd(String name, Group parentGroup){
 		Group newGroup = new Group(name, parentGroup);
 		groups.put(name, newGroup);
+	}
+	public void groupAdd(Group group){
+		groups.put(group.name, group);
 	}
 	public void personRemove(Person person, Group group){
 		group.removePerson(person);
