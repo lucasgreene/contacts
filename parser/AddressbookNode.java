@@ -10,7 +10,9 @@ public class AddressbookNode implements Xmlpage{
 	}
 	
 	public AddressBook toAddressbook() {
-		return new AddressBook(); 
+		AddressBook toReturn = new AddressBook();
+		info.add();
+		return toReturn; 
 	}
 	
 	@Override

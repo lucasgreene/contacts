@@ -11,6 +11,11 @@ public class OuterGroup implements Pagestuff {
 		this.innerStuff = innerStuff;
 		this.outerStuff = outerStuff;
 	}
+	
+	@Override
+	public void add() {
+		
+	}
 
 	@Override
 	public String toString() {
