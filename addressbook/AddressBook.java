@@ -7,15 +7,20 @@ public class AddressBook {
 	Hashtable<String, Person> nameContacts;
 	Hashtable<Integer, Person> IDContacts;
 	private int bookSize;
+	private Group topGroup;
 	
 	public AddressBook(){
 		this.groups = new Hashtable<String, Group>();
 		this.nameContacts = new Hashtable<String, Person>();
 		this.IDContacts = new Hashtable<Integer, Person>();
 		this.bookSize = 1000;
+		this.topGroup = new Group(null,null);
+	}
+	public Group getTopGroup() {
+		return topGroup;
 	}
 	
-	private int createNewId(String name) {
+	public int createNewId(String name) {
 		int firstTry = name.hashCode() % bookSize;
 		boolean success = false;
 		while (!success) {
@@ -47,6 +52,21 @@ public class AddressBook {
 			friend.addFriend(person.ownID);
 		}
 	}
+	
+	public boolean personExists(String name){
+		return nameContacts.get(name) != null;
+	}
+	
+	public int getID(String name){
+		Person person = nameContacts.get(name);
+		return person.ownID;
+	}
+	
+	public Person getPerson(String name){
+		Person person = nameContacts.get(name);
+		return person;
+	}
+	
 	public void newGroupAdd(String name, Group parentGroup){
 		Group newGroup = new Group(name, parentGroup);
 		groups.put(name, newGroup);
@@ -54,8 +74,8 @@ public class AddressBook {
 	public void groupAdd(Group group){
 		groups.put(group.name, group);
 	}
-	public void personRemove(Person person, Group group){
-		group.removePerson(person);
+	public void personRemove(Person person){
+		person.group.removePerson(person);
 		nameContacts.remove(person.name);
 		IDContacts.remove(person.ownID);
 		for(int id : person.friends){
