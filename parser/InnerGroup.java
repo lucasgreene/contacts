@@ -1,27 +1,32 @@
 package contacts.parser;
 
 import contacts.addressbook.AddressBook;
+import contacts.addressbook.Group;
 
 public class InnerGroup implements Groupstuff {
 
 	String name;
-	Groupstuff stuff1;
-	Groupstuff stuff2;
+	Groupstuff innerStuff;
+	Groupstuff nextStuff;
 
-	public InnerGroup(String name, Groupstuff stuff1, Groupstuff stuff2) {
+	public InnerGroup(String name, Groupstuff innerStuff, Groupstuff nextStuff) {
 		this.name = name;
-		this.stuff1 = stuff1;
-		this.stuff2 = stuff2;
+		this.innerStuff = innerStuff;
+		this.nextStuff = nextStuff;
 	}
 	
 	@Override
-	public void add(AddressBook toReturn, OuterGroup OG) {
+	public void add(AddressBook toReturn, Group OG) {
+		Group IG = new Group(name, OG);
+		innerStuff.add(toReturn, IG);
+		nextStuff.add(toReturn, OG);
+		toReturn.groupAdd(IG);
 		
 	}
 
 	@Override
 	public String toString() {
-		return name + "\n" + stuff1.toString() + "\n" + stuff2.toString();
+		return name + "\n" + innerStuff.toString() + "\n" + nextStuff.toString();
 	}
 
 }
