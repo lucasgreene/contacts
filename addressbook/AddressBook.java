@@ -6,12 +6,32 @@ public class AddressBook {
 	Hashtable<String, Group> groups;
 	Hashtable<String, Person> nameContacts;
 	Hashtable<Integer, Person> IDContacts;
+	private int bookSize;
 	
 	public AddressBook(){
 		this.groups = new Hashtable<String, Group>();
 		this.nameContacts = new Hashtable<String, Person>();
 		this.IDContacts = new Hashtable<Integer, Person>();
+		this.bookSize = 1000;
 	}
+	
+	private int createNewId(String name) {
+		int firstTry = name.hashCode() % bookSize;
+		boolean success = false;
+		while (!success) {
+			if (IDContacts.containsKey(firstTry)) {
+				firstTry = nextHash(firstTry);
+			} else {
+				success = true;
+			}
+		}
+		return firstTry;
+	}
+	
+	private int nextHash(int oldHash) {
+		return (oldHash * 19 + 1) % bookSize;
+	}
+	
 	public void initPAdd(Person person){
 		nameContacts.put(person.name, person);
 		IDContacts.put(person.ownID, person);

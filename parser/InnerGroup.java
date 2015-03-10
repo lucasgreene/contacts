@@ -1,5 +1,7 @@
 package contacts.parser;
 
+import contacts.addressbook.AddressBook;
+
 public class InnerGroup implements Groupstuff {
 
 	String name;
@@ -10,6 +12,11 @@ public class InnerGroup implements Groupstuff {
 		this.name = name;
 		this.stuff1 = stuff1;
 		this.stuff2 = stuff2;
+	}
+	
+	@Override
+	public void add(AddressBook toReturn, OuterGroup OG) {
+		
 	}
 
 	@Override

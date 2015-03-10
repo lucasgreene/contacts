@@ -11,7 +11,7 @@ public class AddressbookNode implements Xmlpage{
 	
 	public AddressBook toAddressbook() {
 		AddressBook toReturn = new AddressBook();
-		info.add();
+		info.add(toReturn);
 		return toReturn; 
 	}
 	
