@@ -1,26 +1,39 @@
 package contacts.parser;
 
-public class ContactNode implements Contactstuff{
-	
+import java.util.LinkedList;
+
+import contacts.addressbook.AddressBook;
+import contacts.addressbook.Group;
+import contacts.addressbook.Person;
+
+public class ContactNode implements Contactstuff {
+
 	String name;
 	String number;
-	String ownID;
+	int ownID;
 	Friendstuff friends;
-	public ContactNode(String name, String number, String ownID, Friendstuff friends) {
+
+	public ContactNode(String name, String number, int ownID,
+			Friendstuff friends) {
 		this.name = name;
 		this.number = number;
 		this.ownID = ownID;
 		this.friends = friends;
 	}
-	
+
 	@Override
 	public String toString() {
-		return name + ", " + number + ", " + ownID + '\n' +
-				friends.toString();
+		return name + ", " + number + ", " + ownID + '\n' + friends.toString();
 	}
-	
-	public void add() {
+
+	@Override
+	public void add(AddressBook toReturn, Group IG) {
+		Person contact = new Person(name, number, ownID,
+				new LinkedList<Integer>(), IG);
+		friends.add(contact);
+		toReturn.initPAdd(contact);
 		
+
 	}
-	
+
 }

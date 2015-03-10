@@ -96,12 +96,23 @@ public class Parser {
 				&& openNum == 12 && numText == 24 && closeNum == 13
 				&& openID == 14 && idText == 24 && closeID == 15
 				&& openFriends == 16) {
+			int ID = parseInt(id.attribute);
 			toReturn = new ContactNode(name.attribute, num.attribute,
-					id.attribute, parseFriendstuff());
+					ID, parseFriendstuff());
 		} else {
 			throw new TokenException();
 		}
 		return toReturn;
+	}
+ 
+
+	private int parseInt(String toParse) throws TokenException {
+		try {
+			int intID = Integer.parseInt(toParse);
+			return intID;
+		} catch (NumberFormatException e) {
+			throw new TokenException("Id must be an int");
+	    }
 	}
 
 	public Friendstuff parseFriendstuff() throws TokenException {
@@ -114,7 +125,8 @@ public class Parser {
 			Token endID = current;
 			advance();
 			if (text.kind == 24 && endID.kind == 19) {
-				toReturn = new FriendNode(text.attribute, parseFriendstuff());
+				int ID = parseInt(text.attribute);
+				toReturn = new FriendNode(ID, parseFriendstuff());
 			} else {
 				throw new TokenException();
 			}
