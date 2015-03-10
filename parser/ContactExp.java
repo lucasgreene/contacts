@@ -1,5 +1,9 @@
 package contacts.parser;
 
+import contacts.addressbook.AddressBook;
+import contacts.addressbook.Group;
+import contacts.addressbook.Person;
+
 public class ContactExp implements Groupstuff{
 	
 	Contactstuff info;
@@ -12,5 +16,13 @@ public class ContactExp implements Groupstuff{
 	@Override
 	public String toString() {
 		return info.toString()  + "\n" + otherStuff.toString();
+	}
+
+	@Override
+	public void add(AddressBook toReturn, Group IG) {
+		info.add(toReturn, IG);
+		otherStuff.add(toReturn, IG);
+		
+		
 	}
 }
