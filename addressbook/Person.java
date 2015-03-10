@@ -7,12 +7,14 @@ public class Person {
 	String number;
 	int ownID;
 	LinkedList<Integer> friends;
+	Group group;
 
-	public Person(String name, String number, int ownID, LinkedList<Integer> friends) {
+	public Person(String name, String number, int ownID, LinkedList<Integer> friends, Group group) {
 		this.name = name;
 		this.number = number;
 		this.ownID = ownID;
 		this.friends = friends;
+		this.group = group;
 	}
 	public void addFriend(int id){
 		friends.addLast(id);

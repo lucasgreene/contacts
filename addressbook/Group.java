@@ -25,7 +25,9 @@ public class Group {
 		for(Group i = parentGroup; i != null ; i = i.parentGroup)
 		i.contacts.remove(person);
 	}
-	
+	public LinkedList<Group> getChildGroups(){
+		return childGroups;
+	}
 	@Override
 	public String toString(){
 		StringBuilder string = new StringBuilder();

@@ -31,7 +31,7 @@ public class Client {
 	public void takeInput() throws IOException {
 		String message = iStream.readLine();
 		while (message != null) {
-			InputParser.parse(message, this);
+			InputParser.parse(message, this.book);
 		}
 		iStream.close();
 	}
