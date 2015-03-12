@@ -3,6 +3,7 @@ package contacts.parser;
 import contacts.addressbook.AddressBook;
 import contacts.addressbook.Group;
 
+
 public class OuterGroup implements Pagestuff {
 
 	String name;
@@ -17,7 +18,8 @@ public class OuterGroup implements Pagestuff {
 	
 	@Override
 	public void add(AddressBook toReturn) {
-		Group OG = new Group(name,null);
+		Group OG = new Group(name, null);
+		toReturn.setTopGroups(OG);
 		innerStuff.add(toReturn, OG);
 		toReturn.groupAdd(OG);
 		outerStuff.add(toReturn);

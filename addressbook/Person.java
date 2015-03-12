@@ -19,10 +19,17 @@ public class Person {
 	}
 
 	public void addFriend(int id) {
-		friends.addLast(id);
+		if (!friends.contains(id)) {
+			friends.addLast(id);
+		}	
 	}
 
 	public void removeFriend(int id) {
 		friends.remove(id);
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }

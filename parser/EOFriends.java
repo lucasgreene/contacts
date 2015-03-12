@@ -6,7 +6,7 @@ public class EOFriends implements Friendstuff{
 	
 	@Override 
 	public String toString() {
-		return "</Friends>" ;
+		return "</friendlist>" ;
 	}
 	
 	@Override

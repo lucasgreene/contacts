@@ -12,6 +12,11 @@ public class Group {
 	public Group(String name, Group parentGroup) {
 		this.name = name;
 		this.parentGroup = parentGroup;
+		
+		if (parentGroup != null) {
+			parentGroup.addChildGroup(this);
+		}
+		
 		this.childGroups = new LinkedList<Group>();
 		this.contacts = new LinkedList<Person>();
 	}
@@ -19,10 +24,6 @@ public class Group {
 		contacts.addLast(person);
 		for(Group i = parentGroup; i != null ; i = i.parentGroup)
 		i.contacts.addLast(person);
-	}
-	public void addGroup(String name){
-		Group group = new Group(name, this);
-		childGroups.addLast(group);
 	}
 	public void removePerson(Person person){
 		contacts.remove(person);
@@ -32,6 +33,19 @@ public class Group {
 	public LinkedList<Group> getChildGroups(){
 		return childGroups;
 	}
+	
+	public Group getChildGroup(int i) {
+		return childGroups.get(i);
+	}
+	
+	public void addChildGroup(Group g) {
+		if (!childGroups.contains(g)){
+		childGroups.addFirst(g);
+		}
+	}
+	
+
+	
 	@Override
 	public String toString(){
 		StringBuilder string = new StringBuilder();

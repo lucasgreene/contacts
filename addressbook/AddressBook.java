@@ -1,23 +1,28 @@
 package contacts.addressbook;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class AddressBook {
-	Hashtable<String, Group> groups;
-	Hashtable<String, Person> nameContacts;
-	Hashtable<Integer, Person> IDContacts;
+	public HashMap<String, Group> groups;
+	HashMap<String, Person> nameContacts;
+	HashMap<Integer, Person> IDContacts;
 	private int bookSize;
 	private Group topGroup;
 	
 	public AddressBook(){
-		this.groups = new Hashtable<String, Group>();
-		this.nameContacts = new Hashtable<String, Person>();
-		this.IDContacts = new Hashtable<Integer, Person>();
+		this.groups = new HashMap<String, Group>();
+		this.nameContacts = new HashMap<String, Person>();
+		this.IDContacts = new HashMap <Integer, Person>();
 		this.bookSize = 1000;
 		this.topGroup = new Group(null,null);
 	}
 	public Group getTopGroup() {
 		return topGroup;
+	}
+	
+	public void setTopGroups(Group g) {
+		topGroup.addChildGroup(g);
 	}
 	
 	public int createNewId(String name) {
@@ -53,8 +58,32 @@ public class AddressBook {
 		}
 	}
 	
-	public boolean personExists(String name){
+	public boolean nameExists(String name){
 		return nameContacts.get(name) != null;
+	}
+	
+
+	
+	public boolean idExists(int i) {
+		return IDContacts.get(i) != null;
+	}
+	
+	public boolean groupExists(String name) {
+		return groups.get(name) != null;
+	}
+	
+	public void updatePerson(String name, String num, LinkedList<Integer> friends) {
+		Person p = getPersonbyName(name);
+		p.number = num;
+		p.friends = friends;
+		
+	}
+	
+	public void addToFriends(LinkedList<Integer> fL, int ownID) {
+		for (int i : fL) {
+			Person f = getPersonbyID(i);
+			f.addFriend(ownID);
+		}
 	}
 	
 	public int getID(String name){
@@ -62,8 +91,13 @@ public class AddressBook {
 		return person.ownID;
 	}
 	
-	public Person getPerson(String name){
+	public Person getPersonbyName(String name){
 		Person person = nameContacts.get(name);
+		return person;
+	}
+	
+	public Person getPersonbyID(int id) {
+		Person person = IDContacts.get(id);
 		return person;
 	}
 	
