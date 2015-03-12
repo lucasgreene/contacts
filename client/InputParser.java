@@ -1,6 +1,5 @@
 package contacts.client;
 
-import grailgames.AnthraxAsylum;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +10,7 @@ import contacts.addressbook.Group;
 import contacts.addressbook.Person;
 
 public class InputParser {
-
+	
 	public static void parse(String s, AddressBook book, BufferedReader iStream) throws IOException {
 
 		if (s.equals("Add")) {
@@ -22,7 +21,6 @@ public class InputParser {
 			System.out.println("Friends: ");
 			String friends = iStream.readLine();
 			String[] friendArr = friends.split(", ");
-			boolean friendsExist = true;
 			LinkedList<Integer> friendsList = new LinkedList<Integer>();
 			for(String friend : friendArr){
 				if (book.personExists(friend)){
@@ -58,10 +56,22 @@ public class InputParser {
 								book.createNewId(name), friendsList, currentGroup);
 						currentGroup.addPerson(person);
 						groupChosen = true;
+					} else {
+						System.out.println("Invalid number, please try again");
 					}
+					
 				}
 			} else {
 				System.out.println("Invalid friends, please try again");
+			}
+		} else if (s.equals("Remove")){
+			System.out.println("name: ");
+			String name = iStream.readLine();
+			Person person = book.getPerson(name);
+			if (person != null){
+			book.personRemove(person);
+			} else {
+				System.out.println("Person does not exist, please try again");
 			}
 		}
 	}
