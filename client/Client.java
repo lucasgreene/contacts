@@ -28,6 +28,7 @@ public class Client {
 		
 	}
 	
+	/*
 	public void takeInput() throws IOException {
 		String message = iStream.readLine();
 		while (message != null) {
@@ -35,12 +36,14 @@ public class Client {
 		}
 		iStream.close();
 	}
+	*/
 		
 	public static void main(String[] args) throws IOException {
 		try {
 			Client test = new Client("src/contacts/example.xml");
-			test.takeInput();
+			//test.takeInput();
 			System.out.println(test.abNode.toString());
+			AddressBook b = test.book;
 		} catch (FileNotFoundException e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
