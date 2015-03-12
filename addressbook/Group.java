@@ -3,7 +3,7 @@ package contacts.addressbook;
 import java.util.LinkedList;
 
 public class Group {
-	String name;
+	public String name;
 	Group parentGroup;
 	LinkedList<Group> childGroups;
 	LinkedList<Person> contacts;
@@ -19,6 +19,10 @@ public class Group {
 		contacts.addLast(person);
 		for(Group i = parentGroup; i != null ; i = i.parentGroup)
 		i.contacts.addLast(person);
+	}
+	public void addGroup(String name){
+		Group group = new Group(name, this);
+		childGroups.addLast(group);
 	}
 	public void removePerson(Person person){
 		contacts.remove(person);

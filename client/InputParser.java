@@ -1,16 +1,19 @@
 package contacts.client;
 
+import grailgames.AnthraxAsylum;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import contacts.addressbook.AddressBook;
+import contacts.addressbook.Group;
 import contacts.addressbook.Person;
 
 public class InputParser {
-	
+
 	public static void parse(String s, AddressBook book, BufferedReader iStream) throws IOException {
-		
+
 		if (s.equals("Add")) {
 			System.out.println("Name: ");
 			String name = iStream.readLine();
@@ -26,21 +29,45 @@ public class InputParser {
 					friendsList.add(book.getID(friend));
 				}
 			}
+			
 			if(friendsList.size() == friendArr.length){
-				Person newPerson = new Person(name, number, book.createNewId(name), friendsList);
+				Group currentGroup = book.getTopGroup();
+				LinkedList<Group> children = currentGroup.getChildGroups();
+				boolean groupChosen = false;
 				while(groupChosen == false){
-					for(Group group : book.getTopGroup().childGroups);
-					System.out.println("")
+					int counter = 1;
+					for(Group group : children){
+						System.out.println("(" + counter + ")" + group.name + " ");
+						counter++;
+					}
+					System.out.println("(" + counter + ")" + " create new group");
+					if(currentGroup.name.equals(null)){
+						System.out.println("(" + counter + ")" + " current group");
+					}
+					String input = iStream.readLine();
+					int intInput = Integer.parseInt(input);
+					if(intInput > 0 && intInput< children.size()){
+						currentGroup = children.get(intInput + 1);
+					} else if(intInput == (children.size() + 1)){
+						System.out.println("Group name: ");
+						String groupName = iStream.readLine();
+						currentGroup.addGroup(groupName);
+						currentGroup = currentGroup.getChildGroups().getLast();
+					} else if(intInput == (children.size() + 2) && currentGroup.name != null){
+						Person person = new Person(name, number, 
+								book.createNewId(name), friendsList, currentGroup);
+						currentGroup.addPerson(person);
+						groupChosen = true;
+					}
 				}
-				book.personAdd(person, group);
 			} else {
 				System.out.println("Invalid friends, please try again");
 			}
-			
-			
-			
 		}
-		
 	}
-
 }
+	
+
+
+
+
