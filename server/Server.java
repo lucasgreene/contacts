@@ -27,7 +27,7 @@ public class Server {
 	BufferedReader iStream;
 	private boolean quit = false;
 	private static String host;
-	private static int port = 1818;
+	private static int port;
 	private ServerSocket socket;
 
 	public Server(String xmlFile, int port) throws TokenException, UnknownHostException, IOException {
@@ -36,7 +36,6 @@ public class Server {
 		Parser p = new Parser(t);
 		abNode = p.parseXMLPage();
 		this.book = abNode.toAddressbook();
-		this.iStream = new BufferedReader(new InputStreamReader(System.in));
 		this.socket = new ServerSocket(port);
 
 	}
@@ -145,7 +144,7 @@ public class Server {
 
 		Server s;
 		try {
-			s = new Server("src/contacts/server/server.xml", port);
+			s = new Server("src/contacts/server/server.xml", 1818);
 			s.writeRead();
 		} catch (IOException | TokenException e) {
 
