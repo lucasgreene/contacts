@@ -29,7 +29,6 @@ public class Parser {
 
 	public Pagestuff parsePagestuff() throws TokenException {
 		Pagestuff toReturn;
-		System.out.println(current.toString());
 		Token name = current;
 		if (current.kind == 23) {
 			advance();
@@ -46,7 +45,6 @@ public class Parser {
 
 	public Groupstuff parseGroupstuff() throws TokenException {
 		Groupstuff toReturn;
-		System.out.println(current.toString());
 		Token name = current;
 		if (current.kind == 23) {
 			advance();
@@ -66,7 +64,6 @@ public class Parser {
 	}
 
 	public Contactstuff parseContactstuff() throws TokenException {
-		System.out.println(current.toString());
 		Contactstuff toReturn;
 		int openName = current.kind;
 		advance();
@@ -115,7 +112,6 @@ public class Parser {
 	}
 
 	public Friendstuff parseFriendstuff() throws TokenException {
-		System.out.println(current.toString());
 		Friendstuff toReturn;
 		if (current.kind == 18) {
 			advance();

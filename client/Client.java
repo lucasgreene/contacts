@@ -24,7 +24,6 @@ import contacts.parser.XMLTokenizer;
 public class Client {
 	
 	AddressBook book;
-	AddressbookNode abNode;
 	BufferedReader iStream;
 	private boolean quit = false;
 	private static String host;
@@ -36,8 +35,7 @@ public class Client {
 		BufferedReader reader = new BufferedReader(new FileReader( xmlFile));
 		XMLTokenizer t = new XMLTokenizer(reader);
 		Parser p = new Parser(t);
-		abNode = p.parseXMLPage();
-		book = abNode.toAddressbook();
+		book = p.parseXMLPage().toAddressbook();
 		iStream = new BufferedReader(new InputStreamReader(System.in));
 		this.socket = new Socket(host, port);
 		this.xmlFile = xmlFile;
@@ -53,13 +51,7 @@ public class Client {
 	   // FileOutputStream fos = new FileOutputStream(xmlFile);
 	   // BufferedOutputStream bos = new BufferedOutputStream(fos);
 		
-	    int in = System.in.read();
-		
-		while ( in != -1) {
-		
-			bw1.write(in);
-			in = System.in.read();
-		}
+		bw1.write(command);
 		
 		bw1.flush();
 		
@@ -113,13 +105,10 @@ public class Client {
 		
 	public static void main(String[] args) throws IOException {
 		try {
-			Client test = new Client("src/contacts/example.xml");
-			//test.takeInput();
-			AddressBook book = test.book;
-			Client test2 = new Client("src/contacts/test.xml");
-			AddressBook book2 = test.book;
+			Client test = new Client("src/contacts/example.xml", "localhost", 5789);
+            //test.takeInput();
 			
-			System.out.println(book2.toXML().equals(book.toXML()));
+			
 		} catch (FileNotFoundException e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
