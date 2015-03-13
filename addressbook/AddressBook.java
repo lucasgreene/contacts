@@ -109,13 +109,13 @@ public class AddressBook {
 		groups.put(group.name, group);
 	}
 	public void personRemove(Person person){
-		person.getGroup().removePerson(person);
-		nameContacts.remove(person.name);
-		IDContacts.remove(person.ownID);
 		for(int id : person.friends){
 			Person friend = IDContacts.get(id);
 			friend.removeFriend(person.ownID);
 		}
+		person.getGroup().removePerson(person);
+		nameContacts.remove(person.name);
+		IDContacts.remove(person.ownID);
 	}
 	
 	public String toXML() {

@@ -144,7 +144,7 @@ public class Client {
 		try {
 
 			Client test = new Client("src/contacts/client/client.xml", "localhost", 1818);
-			//test.takeInput();
+			test.takeInput();
 		} catch (FileNotFoundException e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();

@@ -99,19 +99,23 @@ public class Server {
 	}
 
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 
 		Server s;
 		try {
 			s = new Server("src/contacts/server/server.xml", 1818);
-			s.writeRead();
-		} catch (IOException | TokenException e) {
+			s.takeInput();
+			System.out.println("happy");
+		} catch (IOException e) {
 
+			e.printStackTrace();
+		} catch (TokenException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 
 
 
 	}
-	*/
+	
 }
