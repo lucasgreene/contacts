@@ -1,10 +1,17 @@
 package contacts.client;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import contacts.addressbook.AddressBook;
 import contacts.addressbook.Group;
@@ -20,14 +27,55 @@ public class Client {
 	AddressbookNode abNode;
 	BufferedReader iStream;
 	private boolean quit = false;
-	public Client(String xmlFile) throws FileNotFoundException, TokenException {
+	private static String host;
+	private static int port;
+	private Socket socket;
+	String xmlFile;
+	
+	public Client(String xmlFile, String host, int port) throws TokenException, UnknownHostException, IOException {
 		BufferedReader reader = new BufferedReader(new FileReader( xmlFile));
 		XMLTokenizer t = new XMLTokenizer(reader);
 		Parser p = new Parser(t);
 		abNode = p.parseXMLPage();
 		book = abNode.toAddressbook();
 		iStream = new BufferedReader(new InputStreamReader(System.in));
+		this.socket = new Socket(host, port);
+		this.xmlFile = xmlFile;
 		
+	}
+
+	public void readNWrite(String command) throws IOException {
+
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); 
+		
+	   // InputStream is = socket.getInputStream();
+	   // FileOutputStream fos = new FileOutputStream(xmlFile);
+	   // BufferedOutputStream bos = new BufferedOutputStream(fos);
+		
+	    int in = System.in.read();
+		
+		while ( in != -1) {
+		
+			bw1.write(in);
+			in = System.in.read();
+		}
+		
+		bw1.flush();
+		
+		socket.shutdownOutput();
+		
+		int serveout= br1.read(); 
+		while (serveout != -1) {
+		
+		System.out.write((char) serveout);
+		serveout= br1.read(); 
+		}
+		
+		System.out.flush();
+		br1.close();
+
+	//	socket.shutdownInput();	
 	}
 	
 	public void quit () {
