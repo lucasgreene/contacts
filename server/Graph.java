@@ -26,6 +26,10 @@ public class Graph implements IGraph{
 		}
 	}
 	
+	public IGraphNode getNode(int id) {
+		return graph.get(id);
+	}
+	
 	@Override
 	public Collection<IGraphNode> getNodes() {
 		return graph.values();

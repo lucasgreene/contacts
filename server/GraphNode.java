@@ -7,7 +7,7 @@ import graph.*;
 public class GraphNode implements IGraphNode {
 	private LinkedList<Integer> friendInts;
 	private int ownID;
-	private LinkedList<IGraphNode> friends;
+	private LinkedList<IGraphNode> friends = new LinkedList<IGraphNode>();
 	
 	public GraphNode(int ownID, LinkedList<Integer> f){
 		this.friendInts = f;
@@ -31,5 +31,6 @@ public class GraphNode implements IGraphNode {
 	public int getOwnID() {
 		return ownID;
 	}
+	
 	
 }

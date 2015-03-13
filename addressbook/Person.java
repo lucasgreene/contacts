@@ -3,7 +3,7 @@ package contacts.addressbook;
 import java.util.LinkedList;
 
 public class Person {
-	String name;
+	public String name;
 	String number;
 	public int ownID;
 	LinkedList<Integer> friends;

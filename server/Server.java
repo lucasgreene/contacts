@@ -3,6 +3,7 @@ package contacts.server;
 
 
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -13,7 +14,9 @@ import java.io.StringReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 import contacts.addressbook.AddressBook;
 import contacts.addressbook.Person;
@@ -22,6 +25,7 @@ import contacts.parser.AddressbookNode;
 import contacts.parser.Parser;
 import contacts.parser.TokenException;
 import contacts.parser.XMLTokenizer;
+import graph.*;
 
 public class Server {
 
@@ -30,8 +34,8 @@ public class Server {
 	BufferedReader iStream;
 	private boolean quit = false;
 	private ServerSocket socket;
-	private LinkedList<GraphNode> people;
-	private Graph friendGraph;
+	private LinkedList<GraphNode> people = new LinkedList<GraphNode>();
+	private Graph friendGraph = new Graph();
 
 	public Server(String xmlFile, int port) throws TokenException, UnknownHostException, IOException {
 		BufferedReader reader = new BufferedReader(new FileReader( xmlFile));
@@ -46,7 +50,7 @@ public class Server {
 	
 	private void createNodes() {
 		for (Person p : book.getPeople()) {
-			people.add(new GraphNode(p.ownID, p.getFriends()));
+			people.addFirst(new GraphNode(p.ownID, p.getFriends()));
 		}
 	}
 
@@ -64,13 +68,56 @@ public class Server {
 				getPush(asock, br1);
 			} else if(receive.equals("PULL")){
 				getPull(asock, br1);
-			} else if (receive.equals(" ")){
-
+			} else if (receive.equals("QUERY PATH")){
+				getPath(asock, br1);
+			} else if(receive.equals("QUERY MUTUAL")){
+				getMutual(asock, br1);
+			} else {
+				System.out.println("Incorrect input from client");
+				asock.shutdownInput();
+				BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
+				bw1.write("ERROR: SERVER COULND'T PARSE INPUT");
 			}
 			
 
 		}
 	}
+	
+	private void getMutual(Socket asock, BufferedReader br1) {
+		
+	}
+	
+	private void getPath(Socket asock, BufferedReader br1) throws IOException {
+			
+			try {
+				String name1 = br1.readLine();
+				String name2 = br1.readLine();
+				IGraphNode n1 = friendGraph.getNode(book.getPersonbyName(name1).ownID);
+				IGraphNode n2 = friendGraph.getNode(book.getPersonbyName(name2).ownID);
+				java.util.List<IGraphNode> list = GraphAlgorithms.shortestPath(n1, n2);
+				StringBuilder toReturn = new StringBuilder();
+				if (list != null) {
+					for (IGraphNode i : list) {
+						toReturn.append(book.getPersonbyID(i.getOwnID()).name);		
+					}
+				} else {
+					toReturn.append("Server didn't recognize friends");
+				}
+				BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
+				bw1.write("Shortest Path: \n");
+				bw1.write(toReturn.toString());
+				bw1.flush();
+				asock.shutdownOutput();
+			} catch (IOException e) {
+				BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
+				bw1.write("Server didn't recogize friends");
+				bw1.flush();
+				asock.shutdownOutput();
+				
+			}
+			
+		
+		}
 
 
 	private void getPull(Socket asock, BufferedReader br1) throws IOException {
