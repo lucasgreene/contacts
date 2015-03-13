@@ -108,7 +108,7 @@ public class Server {
 				bw1.write(toReturn.toString());
 				bw1.flush();
 				asock.shutdownOutput();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
 				bw1.write("Server didn't recogize friends");
 				bw1.flush();

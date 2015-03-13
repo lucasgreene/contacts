@@ -104,8 +104,24 @@ public class Client {
 
 	}
 
-	public void queryPath() {
-
+	public void queryPath() throws UnknownHostException, IOException {
+		System.out.println("Enter a name");
+		String name1 = iStream.readLine();
+		System.out.println("Enter another name");
+		String name2 = iStream.readLine();
+		Socket socket = new Socket(host,port);
+		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		String header = "QUERY PATH\n";
+		bw1.write(header);
+		bw1.write(name1);
+		bw1.write(name2);
+		bw1.flush();
+		socket.shutdownOutput();
+		String message = br1.readLine();
+		System.out.println(message);
+		socket.shutdownInput();
+		socket.close();
 	}
 
 	public void queryMutual() {
