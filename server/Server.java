@@ -26,8 +26,6 @@ public class Server {
 	AddressbookNode abNode;
 	BufferedReader iStream;
 	private boolean quit = false;
-	private static String host;
-	private static int port;
 	private ServerSocket socket;
 
 	public Server(String xmlFile, int port) throws TokenException, UnknownHostException, IOException {
@@ -46,7 +44,6 @@ public class Server {
 			Socket asock = socket.accept(); 
 
 			BufferedReader br1 = new BufferedReader(new InputStreamReader(asock.getInputStream()));
-			BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
 
 			String receive = br1.readLine();
 			if (receive.equals("PUSH\n")){
@@ -100,12 +97,6 @@ public class Server {
 			bw1.write(message, 0, message.length());
 		} 
 	}
-
-
-
-
-
-
 
 
 	/*public static void main(String[] args) {
