@@ -28,8 +28,10 @@ public class Group {
 
 	public void removePerson(Person person) {
 		contacts.remove(person);
-		for (Group i = parentGroup; i != null; i = i.parentGroup)
+		
+		/*for (Group i = parentGroup; i != null; i = i.parentGroup)
 			i.contacts.remove(person);
+		*/
 	}
 
 	public LinkedList<Group> getChildGroups() {
