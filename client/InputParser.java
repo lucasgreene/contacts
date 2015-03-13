@@ -102,8 +102,23 @@ public class InputParser {
 		}
 	}
 	
-	public void parseGroup() {
+	public void parseGroup() throws IOException {
 		
+		boolean correctInput = false;
+		while (!correctInput) {
+			correctInput = true;
+			System.out.println("Enter a group name");
+			String s = iStream.readLine();
+			try {
+				Group g = book.getGroup(s);
+				for (Person p : g.getContacts()) {
+					System.out.println(p.name);
+				}
+			} catch (NullPointerException e) {
+				System.out.println("Invalid Group");
+				correctInput = false;
+			}
+		}
 	}
 	
 	public void parseRemove() throws IOException {

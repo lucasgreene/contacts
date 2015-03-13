@@ -22,6 +22,10 @@ public class AddressBook {
 		return topGroup;
 	}
 	
+	public Group getGroup(String name) {
+		return groups.get(name);
+	}
+	
 	public void setTopGroups(Group g) {
 		topGroup.addChildGroup(g);
 	}
@@ -166,7 +170,5 @@ public class AddressBook {
 		}
 		return xml.toString();
 	}
-	/*
-	 * error handling for if person doesn't exist?
-	 */
+
 }
