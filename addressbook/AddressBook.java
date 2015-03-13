@@ -110,6 +110,7 @@ public class AddressBook {
 	}
 	public void personRemove(Person person){
 		for(int id : person.friends){
+			System.out.println(id);
 			Person friend = IDContacts.get(id);
 			friend.removeFriend(person.ownID);
 		}

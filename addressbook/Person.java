@@ -26,7 +26,7 @@ public class Person {
 	}
 
 	public void removeFriend(int id) {
-		friends.remove(id);
+		friends.remove((Integer) id);
 	}
 
 	@Override

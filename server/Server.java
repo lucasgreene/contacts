@@ -7,6 +7,7 @@ import java.awt.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -30,6 +31,7 @@ import graph.*;
 public class Server {
 
 	AddressBook book;
+	String xmlFile;
 	AddressbookNode abNode;
 	BufferedReader iStream;
 	private boolean quit = false;
@@ -38,6 +40,7 @@ public class Server {
 	private Graph friendGraph = new Graph();
 
 	public Server(String xmlFile, int port) throws TokenException, UnknownHostException, IOException {
+		this.xmlFile = xmlFile;
 		BufferedReader reader = new BufferedReader(new FileReader( xmlFile));
 		XMLTokenizer t = new XMLTokenizer(reader);
 		Parser p = new Parser(t);
@@ -53,7 +56,13 @@ public class Server {
 			people.addFirst(new GraphNode(p.ownID, p.getFriends()));
 		}
 	}
-
+	
+	public void updateAddressbook() throws IOException {
+		String update = book.toXML();
+		BufferedWriter bw = new BufferedWriter(new FileWriter(xmlFile));
+		bw.write(update);
+		bw.close();
+	}
 
 	public void takeInput() throws IOException, TokenException {
 		System.out.println("Server is running...");
@@ -92,8 +101,6 @@ public class Server {
 			try {
 				String name1 = br1.readLine();
 				String name2 = br1.readLine();
-				Person p = book.getPersonbyName(name1);
-				friendGraph.getNode(0);
 				IGraphNode n1 = friendGraph.getNode(book.getPersonbyName(name1).ownID);
 				IGraphNode n2 = friendGraph.getNode(book.getPersonbyName(name2).ownID);
 				java.util.List<IGraphNode> list = GraphAlgorithms.shortestPath(n1, n2);
@@ -157,6 +164,7 @@ public class Server {
 			Parser p = new Parser(t);
 			abNode = p.parseXMLPage();
 			this.book = abNode.toAddressbook();
+			updateAddressbook();
 			String message = "OK";
 			System.out.println("Updated Address Book");
 			bw1.write(message, 0, message.length());
