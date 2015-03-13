@@ -56,13 +56,14 @@ public class Server {
 			} else if (receive.equals(" ")){
 
 			}
+			
 
 		}
 	}
 
 
 	private void getPull(Socket asock, BufferedReader br1) throws IOException {
-
+		asock.shutdownInput();
 		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
 		try {
 			String xml = book.toXML();
@@ -70,20 +71,21 @@ public class Server {
 			bw1.write(xml, 0, xml.length());
 
 			bw1.flush();
-			bw1.close();
+			asock.shutdownOutput();
 
 		} catch (NullPointerException e) {
 			String header = "ERROR";
 			bw1.write(header, 0, header.length());
 
 			bw1.flush();
-			bw1.close();
+			asock.shutdownOutput();
 		}
 
 	}
 
 	private void getPush(Socket asock, BufferedReader br1) throws IOException, TokenException {
 		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
+		asock.shutdownInput();
 
 		try {
 			String receive = br1.readLine();
@@ -96,12 +98,14 @@ public class Server {
 			System.out.println("Updated Address Book");
 			bw1.write(message, 0, message.length());
 			bw1.flush();
+			asock.shutdownOutput();
 		} catch (IOException e) {
 			String message = "ERROR";
 			System.out.println(message);
 
 			bw1.write(message, 0, message.length());
 			bw1.flush();
+			asock.shutdownOutput();
 		} 
 	}
 
