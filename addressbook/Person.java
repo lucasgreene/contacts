@@ -32,4 +32,18 @@ public class Person {
 	public String toString() {
 		return this.name;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Person)) {
+			return false;
+		} else {
+			Person that = (Person) o;
+			return (this.name.equals(that.name) &&
+					this.number.equals(that.number) &&
+					this.ownID == that.ownID &&
+					this.friends.equals(that.friends) &&
+					this.group.equals(that.group));
+		}
+	}
 }

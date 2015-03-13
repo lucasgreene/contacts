@@ -67,17 +67,7 @@ public class Client {
 		try {
 			Client test = new Client("src/contacts/example.xml");
 			System.out.println(test.abNode.toString());
-			//test.takeInput();
-			AddressBook b = test.book;
-			System.out.println(b.groups.size());
-			Group g = b.getTopGroup();
-			System.out.println(g.getChildGroups().size());
-			Group l = g.getChildGroup(1);
-			System.out.println(l.getChildGroups().size());
-			System.out.println(b.groupExists("friends"));
-			System.out.println(b.groupExists("special friends"));
-			System.out.println(b.groupExists("enemies"));
-			System.out.println(b.getPersonbyID(0).toString());
+			test.takeInput();
 		} catch (FileNotFoundException e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();

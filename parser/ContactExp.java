@@ -20,8 +20,6 @@ public class ContactExp implements Groupstuff{
 	@Override
 	public void add(AddressBook toReturn, Group IG) {
 		info.add(toReturn, IG);
-		otherStuff.add(toReturn, IG);
-		otherStuff.add(toReturn, IG); 
-				
+		otherStuff.add(toReturn, IG);				
 	}
 }
