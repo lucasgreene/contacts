@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class Person {
 	String name;
 	String number;
-	int ownID;
+	public int ownID;
 	LinkedList<Integer> friends;
 	private Group group;
 

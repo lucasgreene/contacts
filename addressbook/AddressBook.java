@@ -1,5 +1,6 @@
 package contacts.addressbook;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -100,7 +101,9 @@ public class AddressBook {
 		Person person = IDContacts.get(id);
 		return person;
 	}
-	
+	public Collection<Person> getPeople() {
+		return nameContacts.values();
+	}
 	public void newGroupAdd(String name, Group parentGroup){
 		Group newGroup = new Group(name, parentGroup);
 		groups.put(name, newGroup);

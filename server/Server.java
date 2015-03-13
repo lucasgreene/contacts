@@ -13,8 +13,10 @@ import java.io.StringReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
 
 import contacts.addressbook.AddressBook;
+import contacts.addressbook.Person;
 import contacts.client.InputParser;
 import contacts.parser.AddressbookNode;
 import contacts.parser.Parser;
@@ -28,6 +30,8 @@ public class Server {
 	BufferedReader iStream;
 	private boolean quit = false;
 	private ServerSocket socket;
+	private LinkedList<GraphNode> people;
+	private Graph friendGraph;
 
 	public Server(String xmlFile, int port) throws TokenException, UnknownHostException, IOException {
 		BufferedReader reader = new BufferedReader(new FileReader( xmlFile));
@@ -36,7 +40,14 @@ public class Server {
 		abNode = p.parseXMLPage();
 		this.book = abNode.toAddressbook();
 		this.socket = new ServerSocket(port);
-
+		createNodes();
+		friendGraph.createGraph(people);
+	}
+	
+	private void createNodes() {
+		for (Person p : book.getPeople()) {
+			people.add(new GraphNode(p.ownID, p.getFriends()));
+		}
 	}
 
 
