@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,6 +26,7 @@ import contacts.parser.XMLTokenizer;
 public class Client {
 
 	AddressBook book;
+	String xmlFile;
 	BufferedReader iStream;
 	private boolean quit = false;
 	private static String host;
@@ -38,6 +40,7 @@ public class Client {
 		iStream = new BufferedReader(new InputStreamReader(System.in));
 		this.port = port;
 		this.host = host;
+		this.xmlFile = xmlFile;
 	}
 
 	
@@ -45,10 +48,15 @@ public class Client {
 		quit = true;
 	}
 	
+	public void updateAddressbook() throws IOException {
+		String update = book.toXML();
+		BufferedWriter bw = new BufferedWriter(new FileWriter(xmlFile));
+		bw.write(update);
+		bw.close();
+	}
+	
 	public void takeInput() throws IOException, TokenException {
 
-		
-		
 		InputParser parser = new InputParser(book, iStream, this);
 		while (!quit) {
 			System.out.println("Enter a command:");

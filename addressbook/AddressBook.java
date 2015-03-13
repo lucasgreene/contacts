@@ -48,9 +48,6 @@ public class AddressBook {
 		IDContacts.put(person.ownID, person);
 	}
 	public void personAdd(Person person, Group group){
-		if (nameContacts.get(person.name) == null){
-			group.addPerson(person);
-		}
 		nameContacts.put(person.name, person);
 		IDContacts.put(person.ownID, person);
 		for(int id : person.friends){

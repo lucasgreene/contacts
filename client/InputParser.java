@@ -28,14 +28,17 @@ public class InputParser {
 			correctInput = true;
 			if (s.equals("add")) {
 				parseAdd();
+				client.updateAddressbook();
 			} else if (s.equals("remove")) {
 				parseRemove();
+				client.updateAddressbook();
 			} else if (s.equals("group")) {
 				parseGroup();
 			} else if (s.equals("push")) {
 				client.push();
 			} else if (s.equals("pull")) {
 				client.pull();
+				client.updateAddressbook();
 			} else if (s.equals("query path")) {
 				client.queryPath();
 			} else if (s.equals("query mutual")) {
@@ -54,14 +57,6 @@ public class InputParser {
 
 	}
 	
-	private boolean parseableInt(String number) {
-		try {
-			Integer.parseInt(number);
-			return true;
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
 
 	private void parseAdd() throws IOException {
 		String name = null;
@@ -99,7 +94,6 @@ public class InputParser {
 			Group g = getGroup();
 			Person newPerson = new Person(name, number, ID, friendInts, g);
 			book.addToFriends(friendInts, ID);
-			g.addPerson(newPerson);
 			book.personAdd(newPerson, g);
 			if (!book.groupExists(g.name)) {
 				book.groupAdd(g);
