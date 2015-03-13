@@ -30,7 +30,6 @@ public class Client {
 	private static String host;
 	private static int port;
 	private Socket socket;
-	String xmlFile;
 	
 	public Client(String xmlFile, String host, int port) throws TokenException, UnknownHostException, IOException {
 		BufferedReader reader = new BufferedReader(new FileReader( xmlFile));
@@ -40,7 +39,6 @@ public class Client {
 		this.book = abNode.toAddressbook();
 		this.iStream = new BufferedReader(new InputStreamReader(System.in));
 		this.socket = new Socket(host, port);
-		this.xmlFile = xmlFile;
 		
 	}
 
@@ -141,10 +139,10 @@ public class Client {
 		
 	public static void main(String[] args) throws IOException {
 		try {
-			Client test = new Client("src/contacts/example.xml");
+			Client test = new Client("src/contacts/example.xml", "localhost", 1818);
 			//test.takeInput();
 			AddressBook book = test.book;
-			Client test2 = new Client("src/contacts/test.xml");
+			Client test2 = new Client("src/contacts/test.xml", "localhost", 1818);
 			AddressBook book2 = test.book;
 			
 			System.out.println(book2.toXML().equals(book.toXML()));

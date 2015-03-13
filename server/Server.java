@@ -1,27 +1,84 @@
 package contacts.server;
 
 
+import Server;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
+import contacts.addressbook.AddressBook;
+import contacts.client.InputParser;
+import contacts.parser.AddressbookNode;
+import contacts.parser.Parser;
+import contacts.parser.TokenException;
+import contacts.parser.XMLTokenizer;
 
 public class Server {
-	private static String host = "localhost"; 
-	private static final int PORT = 5789;
+
+	AddressBook book;
+	AddressbookNode abNode;
+	BufferedReader iStream;
+	private boolean quit = false;
+	private static String host;
+	private static int port;
 	private ServerSocket socket;
-
-
-	public Server(int port) throws IOException {
-
+	
+	public Server(String xmlFile, int port) throws TokenException, UnknownHostException, IOException {
+		BufferedReader reader = new BufferedReader(new FileReader( xmlFile));
+		XMLTokenizer t = new XMLTokenizer(reader);
+		Parser p = new Parser(t);
+		abNode = p.parseXMLPage();
+		this.book = abNode.toAddressbook();
+		this.iStream = new BufferedReader(new InputStreamReader(System.in));
 		this.socket = new ServerSocket(PORT);
-
+		
 	}
 	
-	public 
+	public void takeInput() throws IOException {
+		while (true) {
+			Socket asock = socket.accept(); 
+			
+			BufferedReader br1 = new BufferedReader(new InputStreamReader(asock.getInputStream()));
+			BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
+			
+			String receive = br1.readLine();
+			if (receive.equals("PUSH\n")){
+				getPush(asock, br1);
+			} else if(receive.equals("PULL\n")){
+				
+			} else if (receive.equals(" ")){
+				
+			}
+	        	
+	        }
+	}
+		
+
+	private void getPush(Socket asock, BufferedReader br1) {
+		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
+		
+		try {
+		String receive = br1.readLine();
+		BufferedReader reader = new BufferedReader(new FileReader( receive));
+		XMLTokenizer t = new XMLTokenizer(reader);
+		Parser p = new Parser(t);
+		abNode = p.parseXMLPage();
+		this.book = abNode.toAddressbook();
+        String message = "OK";
+		
+		bw1.write(message, 0, message.length());
+		} catch (IOException e) {
+			String message = "ERROR";
+			bw1.write(message, 0, message.length());
+		} 
+	}
 
 	public void writeRead() throws IOException {
 		
