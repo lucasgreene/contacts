@@ -18,7 +18,6 @@ public class Parser {
 
 	public AddressbookNode parseXMLPage() throws TokenException {
 		if (current.kind == 5) {
-			System.out.println(current.toString());
 			advance();
 			AddressbookNode book = new AddressbookNode(parsePagestuff());
 			return book;
