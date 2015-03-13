@@ -20,18 +20,10 @@ public class Group {
 
 	public void addPerson(Person person) {
 		contacts.addLast(person);
-		/*
-		for (Group i = parentGroup; i != null; i = i.parentGroup)
-			i.contacts.addLast(person);
-		*/
 	}
 
 	public void removePerson(Person person) {
 		contacts.remove(person);
-		
-		/*for (Group i = parentGroup; i != null; i = i.parentGroup)
-			i.contacts.remove(person);
-		*/
 	}
 
 	public LinkedList<Group> getChildGroups() {
@@ -48,6 +40,15 @@ public class Group {
 			childGroups.addFirst(g);
 		}
 		
+	}
+	
+	public void printContacts() {
+		for (Person p : contacts) {
+			System.out.println(p.name);
+		}
+		for (Group g : childGroups) {
+			g.printContacts();
+		}
 	}
 	
 	public LinkedList<Person> getContacts() {

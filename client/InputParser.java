@@ -111,9 +111,7 @@ public class InputParser {
 			String s = iStream.readLine();
 			try {
 				Group g = book.getGroup(s);
-				for (Person p : g.getContacts()) {
-					System.out.println(p.name);
-				}
+				g.printContacts();
 			} catch (NullPointerException e) {
 				System.out.println("Invalid Group");
 				correctInput = false;
