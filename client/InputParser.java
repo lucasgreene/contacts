@@ -156,6 +156,7 @@ public class InputParser {
 					} else {
 						System.out.println("Enter a number between 0 and "
 								+ Integer.toString(length));
+								s = iStream.readLine();
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Please input a number");
