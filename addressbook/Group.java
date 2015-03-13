@@ -20,8 +20,10 @@ public class Group {
 
 	public void addPerson(Person person) {
 		contacts.addLast(person);
+		/*
 		for (Group i = parentGroup; i != null; i = i.parentGroup)
 			i.contacts.addLast(person);
+		*/
 	}
 
 	public void removePerson(Person person) {
@@ -44,6 +46,10 @@ public class Group {
 			childGroups.addFirst(g);
 		}
 		
+	}
+	
+	public LinkedList<Person> getContacts() {
+		return this.contacts;
 	}
 
 	@Override

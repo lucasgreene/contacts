@@ -109,7 +109,7 @@ public class AddressBook {
 		groups.put(group.name, group);
 	}
 	public void personRemove(Person person){
-		person.group.removePerson(person);
+		person.getGroup().removePerson(person);
 		nameContacts.remove(person.name);
 		IDContacts.remove(person.ownID);
 		for(int id : person.friends){
@@ -117,14 +117,54 @@ public class AddressBook {
 			friend.removeFriend(person.ownID);
 		}
 	}
-	/*
+	
 	public String toXML() {
+		StringBuilder xml = new StringBuilder();
+		xml.append("<addressBook>");
 		Group top = getTopGroup();
 		for (Group g : top.getChildGroups()) {
-			
+			xml.append(createGroupXML(g));
 		}
+		xml.append("</addressBook>");
+		return xml.toString();
+	}
+	
+	private String createGroupXML(Group g) {
+		StringBuilder xml = new StringBuilder();
+		String s = "<group name=\""+g.name + "\">";
+		xml.append(s);
+		for (Person p : g.getContacts()) {
+			xml.append(createPersonXML(p));
+		}
+		for (Group child : g.getChildGroups()) {
+			xml.append(createGroupXML(child));
+		}
+		xml.append("</group>");
+		return xml.toString();
+	}
+	
+	private String createPersonXML(Person p) {
+		StringBuilder xml = new StringBuilder();
+		xml.append("<contact><name>");
+		xml.append(p.name);
+		xml.append("</name><number>");
+		xml.append(p.number);
+		xml.append("</number><ownid>");
+		xml.append(Integer.toString(p.ownID));
+		xml.append("</ownid><friends>");
+		xml.append(createFriendsXML(p.friends));
+		xml.append("</friends></contact>");
+		return xml.toString();
 		
-	}*/
+	}
+	
+	private String createFriendsXML(LinkedList<Integer> friends) {
+		StringBuilder xml = new StringBuilder();
+		for (Integer i : friends) {
+			xml.append("<id>" + Integer.toString(i) + "</id>");
+		}
+		return xml.toString();
+	}
 	/*
 	 * error handling for if person doesn't exist?
 	 */

@@ -66,8 +66,12 @@ public class Client {
 	public static void main(String[] args) throws IOException {
 		try {
 			Client test = new Client("src/contacts/example.xml");
-			System.out.println(test.abNode.toString());
-			test.takeInput();
+			//test.takeInput();
+			AddressBook book = test.book;
+			Client test2 = new Client("src/contacts/test.xml");
+			AddressBook book2 = test.book;
+			
+			System.out.println(book2.toXML().equals(book.toXML()));
 		} catch (FileNotFoundException e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
