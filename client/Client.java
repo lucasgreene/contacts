@@ -137,7 +137,29 @@ public class Client {
 		socket.close();
 	}
 
-	public void queryMutual() {
+	public void queryMutual() throws IOException {
+		System.out.println("Enter a name");
+		String name1 = iStream.readLine();
+		System.out.println("Enter another name");
+		String name2 = iStream.readLine();
+		Socket socket = new Socket(host,port);
+		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		String header = "QUERY MUTUAL\n";
+		bw1.write(header);
+		bw1.write(name1 + "\n");
+		bw1.write(name2);
+		bw1.flush();
+		socket.shutdownOutput();
+		StringBuilder sb = new StringBuilder();
+		String message = br1.readLine();
+		while (message != null) {
+			System.out.println(message);
+			sb.append(message);
+			message = br1.readLine();
+		}
+		socket.shutdownInput();
+		socket.close();
 
 	}
 

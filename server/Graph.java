@@ -35,6 +35,19 @@ public class Graph implements IGraph{
 		return graph.values();
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (IGraphNode i : graph.values()) {
+			sb.append("OWNID: " + i.getOwnID() + "\n");
+			for (IGraphNode j : i.getChildren()) {
+				sb.append("ChildID: " + j.getOwnID() + "\n");
+			}
+		}
+		
+		return sb.toString();
+	}
+	
 	public static void main(String[] args) {
 		// Create new nodes
 		LinkedList<Integer> l1 = new LinkedList<Integer>();
