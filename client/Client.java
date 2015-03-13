@@ -42,14 +42,14 @@ public class Client {
 		
 	}
 
-	public void readNWrite(String command) throws IOException {
+	/*public void readNWrite(String command) throws IOException {
 
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); 
 		
-	   // InputStream is = socket.getInputStream();
-	   // FileOutputStream fos = new FileOutputStream(xmlFile);
-	   // BufferedOutputStream bos = new BufferedOutputStream(fos);
+	    InputStream is = socket.getInputStream();
+	    FileOutputStream fos = new FileOutputStream(xmlFile);
+	    BufferedOutputStream bos = new BufferedOutputStream(fos);
 		
 		bw1.write(command);
 		
@@ -69,7 +69,7 @@ public class Client {
 
 	//	socket.shutdownInput();	
 	}
-	
+	*/
 	public void quit () {
 		quit = true;
 	}
@@ -87,11 +87,38 @@ public class Client {
 		System.out.println("Goodbye");
 	}
 	
-	public void push() {
+	public void push() throws IOException {
+		String xml = book.toXML();
+		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+		String header = "PUSH";
+		
+		bw1.write(header, 0, header.length());
+        bw1.write(xml, 0, xml.length());
+        
+		bw1.flush();
+		bw1.close();
 		
 	}
 	
-	public void pull() {
+	public void pull() throws IOException, TokenException {
+		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		
+		String header = "PULL";
+		
+		bw1.write(header, 0, header.length());
+		bw1.flush();
+		bw1.close();
+        String receive = br1.readLine();
+        if (receive.equals("ERROR")){
+        	System.out.println("Error pulling xml from server");
+        } else {
+        	BufferedReader reader = new BufferedReader(new FileReader( receive));
+    		XMLTokenizer t = new XMLTokenizer(reader);
+    		Parser p = new Parser(t);
+    		this.book = p.parseXMLPage().toAddressbook();
+        }
 		
 	}
 	
