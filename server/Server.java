@@ -40,6 +40,7 @@ public class Server {
 
 
 	public void takeInput() throws IOException, TokenException {
+		System.out.println("Server is running...");
 		while (true) {
 			Socket asock = socket.accept(); 
 
