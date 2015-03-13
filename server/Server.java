@@ -21,7 +21,7 @@ public class Server {
 
 	}
 	
-	
+	public 
 
 	public void writeRead() throws IOException {
 		
