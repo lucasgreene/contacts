@@ -1,7 +1,7 @@
 package contacts.server;
 
 
-import Server;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,7 +27,7 @@ public class Server {
 	BufferedReader iStream;
 	private boolean quit = false;
 	private static String host;
-	private static int port;
+	private static int port = 1818;
 	private ServerSocket socket;
 
 	public Server(String xmlFile, int port) throws TokenException, UnknownHostException, IOException {
@@ -37,16 +37,12 @@ public class Server {
 		abNode = p.parseXMLPage();
 		this.book = abNode.toAddressbook();
 		this.iStream = new BufferedReader(new InputStreamReader(System.in));
-		this.socket = new ServerSocket(PORT);
+		this.socket = new ServerSocket(port);
 
 	}
-<<<<<<< HEAD
-	
-	
-=======
->>>>>>> 93cb569e063fd95cc132c03678197d2387238a2b
 
-	public void takeInput() throws IOException {
+
+	public void takeInput() throws IOException, TokenException {
 		while (true) {
 			Socket asock = socket.accept(); 
 
@@ -66,7 +62,7 @@ public class Server {
 	}
 
 
-	private void getPull(Socket asock, BufferedReader br1) {
+	private void getPull(Socket asock, BufferedReader br1) throws IOException {
 
 		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
 		try {
@@ -87,7 +83,7 @@ public class Server {
 
 	}
 
-	private void getPush(Socket asock, BufferedReader br1) {
+	private void getPush(Socket asock, BufferedReader br1) throws IOException, TokenException {
 		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
 
 		try {
@@ -149,9 +145,9 @@ public class Server {
 
 		Server s;
 		try {
-			s = new Server(PORT);
+			s = new Server("src/contacts/server/server.xml", port);
 			s.writeRead();
-		} catch (IOException e) {
+		} catch (IOException | TokenException e) {
 
 			e.printStackTrace();
 		} 

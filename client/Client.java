@@ -143,13 +143,8 @@ public class Client {
 	public static void main(String[] args) throws IOException {
 		try {
 
-			Client test = new Client("src/contacts/example.xml", "localhost", 1818);
+			Client test = new Client("src/contacts/client/client.xml", "localhost", 1818);
 			//test.takeInput();
-			AddressBook book = test.book;
-			Client test2 = new Client("src/contacts/test.xml", "localhost", 1818);
-			AddressBook book2 = test.book;
-
-			System.out.println(book2.toXML().equals(book.toXML()));
 		} catch (FileNotFoundException e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();

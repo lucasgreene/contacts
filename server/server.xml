@@ -1,0 +1,50 @@
+<addressBook>
+	<group name="friends">
+		<contact>
+			<name>Jimbo Jones</name>
+			<number>1800-204-4059</number>
+			<ownid>0</ownid>
+			<friends>
+				<id>2</id>
+			</friends>
+		</contact>
+		<contact>
+			<name>Seymour Skinner</name>
+			<number>1800-204-smor</number>
+			<ownid>1</ownid>
+			<friends>
+			</friends>
+		</contact>
+		<group name="special friends">
+			<contact>
+				<name>Nelson Muntz</name>
+				<number>1800-204-1234</number>
+				<ownid>2</ownid>
+				<friends>
+					<id>0</id>
+					<id>4</id>
+				</friends>
+			</contact>
+		</group>
+		<contact>
+			<name>Homer Simpson</name>
+			<number>1800-204-5674</number>
+			<ownid>5</ownid>
+			<friends>
+			</friends>
+		</contact>
+	</group>
+	<group name="enemies">
+		<contact>
+			<name>Devil</name>
+			<number>401-204-4059</number>
+			<ownid>4</ownid>
+			<friends>
+				<id>2</id>
+			</friends>
+		</contact>
+		<group name="frenemies">
+		</group>
+	</group>
+</addressBook>
+
