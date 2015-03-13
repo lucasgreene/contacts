@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import contacts.addressbook.AddressBook;
 import contacts.addressbook.Group;
 import contacts.addressbook.Person;
+import contacts.parser.TokenException;
 
 public class InputParser {
 
@@ -20,7 +21,7 @@ public class InputParser {
 		this.client = client;
 	}
 
-	public void parse(String s) throws IOException {
+	public void parse(String s) throws IOException, TokenException {
 
 		boolean correctInput = false;
 		while (!correctInput) {

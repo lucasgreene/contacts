@@ -39,6 +39,10 @@ public class Person {
 		return group;
 	}
 	
+	public LinkedList<Integer> getFriends() {
+		return friends;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Person)) {

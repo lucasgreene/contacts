@@ -74,7 +74,7 @@ public class Client {
 		quit = true;
 	}
 	
-	public void takeInput() throws IOException {
+	public void takeInput() throws IOException, TokenException {
 		System.out.println("Enter a command:");
 		String message = iStream.readLine();
 		InputParser parser = new InputParser(book, iStream, this);
