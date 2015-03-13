@@ -40,43 +40,7 @@ public class Client {
 
 	}
 
-	/*public void readNWrite(String command) throws IOException {
-
-		BufferedReader br1 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); 
-
-	    InputStream is = socket.getInputStream();
-	    FileOutputStream fos = new FileOutputStream(xmlFile);
-	    BufferedOutputStream bos = new BufferedOutputStream(fos);
-
-		
-
-
-	    int in = System.in.read();
-
-		while ( in != -1) {
-
-			bw1.write(in);
-			in = System.in.read();
-		}
-
-		bw1.flush();
-
-		socket.shutdownOutput();
-
-		int serveout= br1.read(); 
-		while (serveout != -1) {
-
-		System.out.write((char) serveout);
-		serveout= br1.read(); 
-		}
-
-		System.out.flush();
-		br1.close();
-
-	//	socket.shutdownInput();	
-	}
-	 */
+	
 	public void quit () {
 		quit = true;
 	}
@@ -99,7 +63,7 @@ public class Client {
 		String xml = book.toXML();
 		BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-		String header = "PUSH";
+		String header = "PUSH\n";
 
 		bw1.write(header, 0, header.length());
 		bw1.write(xml, 0, xml.length());

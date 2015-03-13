@@ -142,8 +142,6 @@ public class InputParser {
 			System.out.println("Select a number");
 			String toPrint = "";
 			int length = childGroups.size();
-			System.out.println(topGroup.name);
-			System.out.println(length);
 			int ind = 0;
 			for (Group g : childGroups) {
 				toPrint += g.name + ": " + Integer.toString(ind) + " ";

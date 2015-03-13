@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -43,13 +44,14 @@ public class Server {
 		System.out.println("Server is running...");
 		while (true) {
 			Socket asock = socket.accept(); 
+			System.out.println("Connected to client socket...");
 
 			BufferedReader br1 = new BufferedReader(new InputStreamReader(asock.getInputStream()));
 
 			String receive = br1.readLine();
-			if (receive.equals("PUSH\n")){
+			if (receive.equals("PUSH")){
 				getPush(asock, br1);
-			} else if(receive.equals("PULL\n")){
+			} else if(receive.equals("PULL")){
 				getPull(asock, br1);
 			} else if (receive.equals(" ")){
 
@@ -85,17 +87,21 @@ public class Server {
 
 		try {
 			String receive = br1.readLine();
-			BufferedReader reader = new BufferedReader(new FileReader( receive));
+			StringReader reader = new StringReader(receive);
 			XMLTokenizer t = new XMLTokenizer(reader);
 			Parser p = new Parser(t);
 			abNode = p.parseXMLPage();
 			this.book = abNode.toAddressbook();
 			String message = "OK";
-
+			System.out.println("Updated Address Book");
 			bw1.write(message, 0, message.length());
+			bw1.flush();
 		} catch (IOException e) {
 			String message = "ERROR";
+			System.out.println(message);
+
 			bw1.write(message, 0, message.length());
+			bw1.flush();
 		} 
 	}
 
