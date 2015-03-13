@@ -101,38 +101,6 @@ public class Server {
 		} 
 	}
 
-	public void writeRead() throws IOException {
-
-		while (true) {
-			Socket asock = socket.accept(); 
-
-			BufferedReader br1 = new BufferedReader(new InputStreamReader(asock.getInputStream()));
-			BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream())); 
-
-			int in = asock.getInputStream().read();
-			while (in != -1) {
-
-				bw1.write(in);
-				in = asock.getInputStream().read();
-			}
-
-			bw1.flush();
-
-
-
-			int serveout= br1.read(); 
-			while (serveout != -1) {
-
-				asock.getOutputStream().write((char) serveout);
-				serveout = br1.read(); 
-			}
-
-			asock.getOutputStream().flush();
-			br1.close();
-		}
-
-		//	socket.shutdownInput();	
-	}
 
 
 
@@ -140,7 +108,7 @@ public class Server {
 
 
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 
 		Server s;
 		try {
@@ -154,4 +122,5 @@ public class Server {
 
 
 	}
+	*/
 }
