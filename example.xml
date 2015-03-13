@@ -6,6 +6,7 @@
 			<ownid>0</ownid>
 			<friends>
 				<id>2</id>
+				<id>1</id>
 			</friends>
 		</contact>
 		<contact>
@@ -13,6 +14,8 @@
 			<number>1800-204-smor</number>
 			<ownid>1</ownid>
 			<friends>
+				<id>0</id>
+				<id>5</id>
 			</friends>
 		</contact>
 		<group name="special friends">
@@ -31,6 +34,7 @@
 			<number>1800-204-5674</number>
 			<ownid>5</ownid>
 			<friends>
+				<id>1</id>
 			</friends>
 		</contact>
 	</group>

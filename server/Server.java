@@ -92,23 +92,28 @@ public class Server {
 			try {
 				String name1 = br1.readLine();
 				String name2 = br1.readLine();
+				Person p = book.getPersonbyName(name1);
+				friendGraph.getNode(0);
 				IGraphNode n1 = friendGraph.getNode(book.getPersonbyName(name1).ownID);
 				IGraphNode n2 = friendGraph.getNode(book.getPersonbyName(name2).ownID);
 				java.util.List<IGraphNode> list = GraphAlgorithms.shortestPath(n1, n2);
 				StringBuilder toReturn = new StringBuilder();
 				if (list != null) {
 					for (IGraphNode i : list) {
-						toReturn.append(book.getPersonbyID(i.getOwnID()).name);		
+						toReturn.append(book.getPersonbyID(i.getOwnID()).name);
+						toReturn.append(" -> ");
 					}
 				} else {
 					toReturn.append("Server didn't recognize friends");
 				}
+				toReturn.append("End of Path");
 				BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
 				bw1.write("Shortest Path: \n");
-				bw1.write(toReturn.toString());
+				String path = toReturn.toString();
+				bw1.write(path);
 				bw1.flush();
 				asock.shutdownOutput();
-			} catch (Exception e) {
+			} catch (IOException | NullPointerException e) {
 				BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(asock.getOutputStream()));
 				bw1.write("Server didn't recogize friends");
 				bw1.flush();
@@ -168,13 +173,14 @@ public class Server {
 	}
 
 
+
 	public static void main(String[] args) {
 
 		Server s;
 		try {
 			s = new Server("src/contacts/server/server.xml", 1818);
+			//System.out.println(s.book.toXML());
 			s.takeInput();
-			System.out.println("happy");
 		} catch (IOException e) {
 
 			e.printStackTrace();

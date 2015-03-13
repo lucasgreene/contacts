@@ -114,12 +114,17 @@ public class Client {
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		String header = "QUERY PATH\n";
 		bw1.write(header);
-		bw1.write(name1);
+		bw1.write(name1 + "\n");
 		bw1.write(name2);
 		bw1.flush();
 		socket.shutdownOutput();
+		StringBuilder sb = new StringBuilder();
 		String message = br1.readLine();
-		System.out.println(message);
+		while (message != null) {
+			System.out.println(message);
+			sb.append(message);
+			message = br1.readLine();
+		}
 		socket.shutdownInput();
 		socket.close();
 	}

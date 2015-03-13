@@ -34,5 +34,35 @@ public class Graph implements IGraph{
 	public Collection<IGraphNode> getNodes() {
 		return graph.values();
 	}
+	
+	public static void main(String[] args) {
+		// Create new nodes
+		LinkedList<Integer> l1 = new LinkedList<Integer>();
+		l1.addFirst(1);
+		l1.addFirst(2);
+		GraphNode n1 = new GraphNode(0,l1);
+		LinkedList<Integer> l2 = new LinkedList<Integer>();
+		GraphNode n2 = new GraphNode(3,l2);
+		LinkedList<Integer> l3 = new LinkedList<Integer>();
+		l3.addFirst(0);
+		GraphNode n3 = new GraphNode(1,l3);
+		LinkedList<Integer> l4 = new LinkedList<Integer>();
+		l4.addFirst(0);
+		GraphNode n4 = new GraphNode(2,l4);
+		Graph g = new Graph();
+		LinkedList<GraphNode> ln = new LinkedList<GraphNode>();
+		ln.addFirst(n1);
+		ln.addFirst(n2);
+		ln.addFirst(n3);
+		ln.addFirst(n4);
+		g.createGraph(ln);
+		IGraphNode test = g.getNode(0);
+		Collection<IGraphNode> childs = test.getChildren();
+		System.out.println(test.getOwnID() == 0);
+		for (IGraphNode i : childs) {
+			System.out.println(i.getOwnID() == 1 || i.getOwnID() == 2);
+		}
+		
+	}
 
 }
