@@ -111,8 +111,23 @@ public class InputParser {
 		
 	}
 	
-	public void parseRemove() {
-		
+	public void parseRemove() throws IOException {
+		String name = null;
+
+		boolean correctInput = false;
+		while (!correctInput) {
+			correctInput = true;
+			System.out.println("Name: ");
+			name = iStream.readLine();
+			if (book.nameExists(name)){
+				Person person = book.getPersonbyName(name);
+				book.personRemove(person);
+				System.out.println(name + " has been removed.");
+			} else {
+				correctInput = false;
+				System.out.println("Person not found, try again");
+			}
+		}
 	}
 
 	private Group getGroup() throws IOException {
