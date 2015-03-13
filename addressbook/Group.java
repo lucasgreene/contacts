@@ -11,13 +11,11 @@ public class Group {
 	public Group(String name, Group parentGroup) {
 		this.name = name;
 		this.parentGroup = parentGroup;
-		
+		this.childGroups = new LinkedList<Group>();
+		this.contacts = new LinkedList<Person>();
 		if (parentGroup != null) {
 			parentGroup.addChildGroup(this);
 		}
-
-		this.childGroups = new LinkedList<Group>();
-		this.contacts = new LinkedList<Person>();
 	}
 
 	public void addPerson(Person person) {

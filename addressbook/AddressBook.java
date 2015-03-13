@@ -118,6 +118,14 @@ public class AddressBook {
 		}
 	}
 	/*
+	public String toXML() {
+		Group top = getTopGroup();
+		for (Group g : top.getChildGroups()) {
+			
+		}
+		
+	}*/
+	/*
 	 * error handling for if person doesn't exist?
 	 */
 }
